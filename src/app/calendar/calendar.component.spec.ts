@@ -34,4 +34,24 @@ describe('CalendarComponent', () => {
     const currentYear = moment().format('YYYY');
     expect(document.querySelector('#full-year').textContent).toEqual(currentYear);
   });
+
+  it('should display last Sunday date of previous month if the first Sunday on the calendar table belongs to previous month', () => {
+    const now = moment('20170629', 'YYYYMMDD');
+    component.now = now;
+    const clone = now.clone();
+    clone.date(1);
+    clone.startOf('week');
+
+    expect(document.querySelector('#calendar > tbody > tr > td').textContent).toEqual('' + clone.date());
+  });
+
+  it('should display last Saturday date of next month if the last Saturday on the calendar table belongs to next month', () => {
+    const now = moment('20170629', 'YYYYMMDD');
+    component.now = now;
+    const clone = now.clone();
+    clone.endOf('month');
+    clone.endOf('week');
+
+    expect(document.querySelector('#calendar > tbody > tr:last-child > td:last-child').textContent).toEqual('' + clone.date());
+  });
 });
