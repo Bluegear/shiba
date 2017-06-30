@@ -40,6 +40,7 @@ export class CalendarComponent implements OnInit {
     lastDay.endOf('week');
     lastDay.startOf('day');
 
+    this.weeks = new Array<Array<String>>();
     while (!firstDay.isSameOrAfter(lastDay)) {
       const week = new Array<string>();
       for (let i = 0; i < 7; i++) {
