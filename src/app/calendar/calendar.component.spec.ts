@@ -36,6 +36,12 @@ describe('CalendarComponent', () => {
     expect(document.querySelector('#full-year').textContent).toEqual(currentYear);
   });
 
+  it('should display new long month name when replace monthString with the new one', () => {
+    component.monthString = moment('20171105', 'YYYYMMDD').format('YYYYMMDD');
+    fixture.detectChanges();
+    expect(document.querySelector('#long-month-name').textContent).toEqual('November');
+  });
+
   it('should display last Sunday date of previous month if the first Sunday on the calendar table belongs to previous month', () => {
     const now = moment('20170629', 'YYYYMMDD');
     component.monthString = now.format('YYYYMMDD');

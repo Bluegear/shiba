@@ -22,4 +22,16 @@ export class CalendarContainerComponent implements OnInit {
     this.nextMonthString = nextMonth.format('YYYYMMDD');
   }
 
+  prevBtnClick() {
+    this.nextMonthString = this.currentMonthString;
+    const focusMoment = moment(this.currentMonthString, 'YYYYMMDD');
+    this.currentMonthString = focusMoment.add(-1, 'months').format('YYYYMMDD');
+  }
+
+  nextBtnClick() {
+    this.currentMonthString = this.nextMonthString;
+    const focusMoment = moment(this.nextMonthString, 'YYYYMMDD');
+    this.nextMonthString = focusMoment.add(1, 'months').format('YYYYMMDD');
+  }
+
 }

@@ -1,2 +1,6 @@
-<app-calendar [monthString]="currentMonthString"></app-calendar>
-<app-calendar [monthString]="nextMonthString"></app-calendar>
+<div>
+  <a id="prevBtn" (click)="prevBtnClick()" href="#prev">&lt;</a>
+  <a id="nextBtn" (click)="nextBtnClick()" href="#next">&gt;</a>
+  <app-calendar [monthString]="currentMonthString"></app-calendar>
+  <app-calendar [monthString]="nextMonthString"></app-calendar>
+</div>

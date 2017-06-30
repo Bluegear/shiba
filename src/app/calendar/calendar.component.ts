@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import * as moment from 'moment';
 
 @Component({
@@ -8,17 +8,24 @@ import * as moment from 'moment';
 })
 export class CalendarComponent implements OnInit {
 
-  @Input('monthString') monthString: string;
+
   longMonthName: string;
   currentYear: string;
   weeks: Array<Array<String>> = new Array<Array<String>>();
 
-  constructor() { }
+  private _monthString = '';
 
-  ngOnInit() {
+  @Input('monthString')
+  set monthString(monthString: string) {
 
+    console.log('Setter called!');
+
+    if (!monthString) {
+      return;
+    }
+
+    this._monthString = monthString;
     const focusMoment = moment(this.monthString, 'YYYYMMDD');
-    console.log(this.monthString);
     this.currentYear = focusMoment.format('YYYY');
     this.longMonthName = focusMoment.format('MMMM');
 
@@ -42,4 +49,10 @@ export class CalendarComponent implements OnInit {
       this.weeks.push(week);
     }
   }
+
+  get monthString(): string { return this._monthString; }
+
+  constructor() { }
+
+  ngOnInit() { }
 }
