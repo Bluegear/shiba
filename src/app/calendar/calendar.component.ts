@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import * as moment from 'moment';
 
 @Component({
@@ -8,24 +8,27 @@ import * as moment from 'moment';
 })
 export class CalendarComponent implements OnInit {
 
-  now = moment();
-  currentMonth: string;
+  @Input('monthString') monthString: string;
+  longMonthName: string;
   currentYear: string;
   weeks: Array<Array<String>> = new Array<Array<String>>();
 
   constructor() { }
 
   ngOnInit() {
-    this.currentMonth = this.now.format('MMMM');
-    this.currentYear = this.now.format('YYYY');
+
+    const focusMoment = moment(this.monthString, 'YYYYMMDD');
+    console.log(this.monthString);
+    this.currentYear = focusMoment.format('YYYY');
+    this.longMonthName = focusMoment.format('MMMM');
 
     // Init calendar
-    const firstDay = this.now.clone();
+    const firstDay = focusMoment.clone();
     firstDay.date(1);
     firstDay.startOf('week');
     firstDay.startOf('day');
 
-    const lastDay = this.now.clone();
+    const lastDay = focusMoment.clone();
     lastDay.endOf('month');
     lastDay.endOf('week');
     lastDay.startOf('day');

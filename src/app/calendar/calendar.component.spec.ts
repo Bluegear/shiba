@@ -18,6 +18,7 @@ describe('CalendarComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CalendarComponent);
     component = fixture.componentInstance;
+    component.monthString = moment().format('YYYYMMDD');
     fixture.detectChanges();
   });
 
@@ -37,7 +38,7 @@ describe('CalendarComponent', () => {
 
   it('should display last Sunday date of previous month if the first Sunday on the calendar table belongs to previous month', () => {
     const now = moment('20170629', 'YYYYMMDD');
-    component.now = now;
+    component.monthString = now.format('YYYYMMDD');
     const clone = now.clone();
     clone.date(1);
     clone.startOf('week');
@@ -47,7 +48,7 @@ describe('CalendarComponent', () => {
 
   it('should display last Saturday date of next month if the last Saturday on the calendar table belongs to next month', () => {
     const now = moment('20170629', 'YYYYMMDD');
-    component.now = now;
+    component.monthString = now.format('YYYYMMDD');
     const clone = now.clone();
     clone.endOf('month');
     clone.endOf('week');
