@@ -1,4 +1,4 @@
-<div>
+<div class="box">
   <span id="long-month-name">{{longMonthName}}</span>
   <span id="full-year">{{currentYear}}</span>
   <table id="calendar">
@@ -15,7 +15,9 @@
     </thead>
     <tbody>
       <tr *ngFor="let week of weeks; index as i;">
-        <td *ngFor="let day of week; index as j;">{{day}}</td>
+        <ng-container *ngFor="let date of week; index as j;">
+          <td [class.dim]="!isInFocusMonth(date)">{{ date.format('DD') }}</td>
+        </ng-container>
       </tr>
     </tbody>
   </table>

@@ -11,14 +11,12 @@ export class CalendarComponent implements OnInit {
 
   longMonthName: string;
   currentYear: string;
-  weeks: Array<Array<String>> = new Array<Array<String>>();
+  weeks: Array<Array<Object>> = new Array<Array<Object>>();
 
   private _monthString = '';
 
   @Input('monthString')
   set monthString(monthString: string) {
-
-    console.log('Setter called!');
 
     if (!monthString) {
       return;
@@ -42,9 +40,9 @@ export class CalendarComponent implements OnInit {
 
     this.weeks = new Array<Array<String>>();
     while (!firstDay.isSameOrAfter(lastDay)) {
-      const week = new Array<string>();
+      const week = new Array<Object>();
       for (let i = 0; i < 7; i++) {
-        week.push('' + firstDay.date());
+        week.push(firstDay.clone());
         firstDay.add(1, 'days');
       }
       this.weeks.push(week);
@@ -56,4 +54,9 @@ export class CalendarComponent implements OnInit {
   constructor() { }
 
   ngOnInit() { }
+
+  isInFocusMonth(date) {
+    return this.longMonthName === date.format('MMMM');
+  }
+
 }
