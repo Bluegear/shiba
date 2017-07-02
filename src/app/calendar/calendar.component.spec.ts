@@ -3,14 +3,20 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CalendarComponent } from './calendar.component';
 
 import * as moment from 'moment';
+import { Router, RouterModule } from '@angular/router';
 
 describe('CalendarComponent', () => {
   let component: CalendarComponent;
   let fixture: ComponentFixture<CalendarComponent>;
+  let spy: any;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CalendarComponent]
+      declarations: [CalendarComponent],
+      providers: [{
+        provide: Router,
+        useClass: class { navigate = jasmine.createSpy('navigate'); }
+      }]
     })
       .compileComponents();
   }));
@@ -20,6 +26,7 @@ describe('CalendarComponent', () => {
     component = fixture.componentInstance;
     component.monthString = moment().format('YYYYMMDD');
     fixture.detectChanges();
+    spy = spyOn(component, 'openEventInputComponent');
   });
 
   it('should be created', () => {
@@ -52,6 +59,7 @@ describe('CalendarComponent', () => {
   it('should display last Sunday date of previous month if the first Sunday on the calendar table belongs to previous month', () => {
     const now = moment('20170629', 'YYYYMMDD');
     component.monthString = now.format('YYYYMMDD');
+    fixture.detectChanges();
     const clone = now.clone();
     clone.date(1);
     clone.startOf('week');
@@ -62,10 +70,22 @@ describe('CalendarComponent', () => {
   it('should display last Saturday date of next month if the last Saturday on the calendar table belongs to next month', () => {
     const now = moment('20170629', 'YYYYMMDD');
     component.monthString = now.format('YYYYMMDD');
+    fixture.detectChanges();
     const clone = now.clone();
     clone.endOf('month');
     clone.endOf('week');
 
     expect(document.querySelector('#calendar > tbody > tr:last-child > td:last-child').textContent).toEqual('' + clone.date());
+  });
+
+  it('should call openEventInputComponent() when a date was clicked', () => {
+    const now = moment('20170729', 'YYYYMMDD');
+    component.monthString = now.format('YYYYMMDD');
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      const dateCell = fixture.debugElement.nativeElement.querySelector('#20170717');
+      dateCell.click();
+      expect(component.openEventInputComponent).toHaveBeenCalled();
+    });
   });
 });

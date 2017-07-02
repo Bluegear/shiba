@@ -4,6 +4,7 @@ import { CalendarContainerComponent } from './calendar-container.component';
 import { CalendarComponent } from 'app/calendar/calendar.component';
 
 import * as moment from 'moment';
+import { Router } from '@angular/router';
 
 describe('CalendarContainerComponent', () => {
   let component: CalendarContainerComponent;
@@ -11,7 +12,11 @@ describe('CalendarContainerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CalendarContainerComponent, CalendarComponent]
+      declarations: [CalendarContainerComponent, CalendarComponent],
+      providers: [{
+        provide: Router,
+        useClass: class { navigate = jasmine.createSpy('navigate'); }
+      }]
     })
       .compileComponents();
   }));

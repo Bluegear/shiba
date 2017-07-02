@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import * as moment from 'moment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-calendar',
@@ -51,12 +52,16 @@ export class CalendarComponent implements OnInit {
 
   get monthString(): string { return this._monthString; }
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() { }
 
   isInFocusMonth(date) {
     return this.longMonthName === date.format('MMMM');
+  }
+
+  openEventInputComponent(date) {
+    this.router.navigate(['/event', date.format('YYYYMMDD')]);
   }
 
 }

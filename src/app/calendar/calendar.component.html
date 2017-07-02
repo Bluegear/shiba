@@ -16,7 +16,7 @@
     <tbody>
       <tr *ngFor="let week of weeks; index as i;">
         <ng-container *ngFor="let date of week; index as j;">
-          <td [class.dim]="!isInFocusMonth(date)">{{ date.format('DD') }}</td>
+          <td id="{{ date.format('YYYYMMDD') }}" (click)="openEventInputComponent(date)" [class.dim]="!isInFocusMonth(date)">{{ date.format('D') }}</td>
         </ng-container>
       </tr>
     </tbody>
